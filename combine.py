@@ -27,6 +27,7 @@ def main():
         edited_people['email'] = email
         if '%s.jpg' % email in thumbnails:
             edited_people['thumbnail'] = True
+        edited_people['title'] = info.get('title')
         people_list.append(edited_people)
     
     def compare(a, b):
