@@ -1,0 +1,10 @@
+name: mozilliansgame
+url:
+    - mozilliansgame.paas.allizom.org
+framework:
+    type: python
+    runtime: python27
+mem: 128M
+instances: 1
+processes:
+    web: python main.py

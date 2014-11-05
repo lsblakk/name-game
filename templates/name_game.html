@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html manifest="{{ url_for('static', filename='cache.manifest') }}">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, maximum-scale=1">
+<title>Mozilla Name Game</title>
+<head>
+<script>
+var gPeople;
+var right;
+var wrong;
+
+function onLoadPeople(people)
+{
+    people = people.filter(function (person){
+            return person.thumbnail;     
+        });
+    people.forEach(function (person){
+            if (person.title == null) {
+                person.title = "job title unknown"
+            }
+            person.thumbnail = "{{ url_for('static', filename='images/people/') }}" + person.email + ".jpg"
+        });
+    gPeople = people;
+}
+</script>
+<script src="{{ url_for('static', filename='load-people.js') }}"></script>
+<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='jquery.mobile-1.4.5.min.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jquery.mobile-1.4.5.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+<script>
+function getRandomInt(min, max)
+{
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function setImage(person) {
+    $("#thumbnail").attr("src", person.thumbnail);
+}
+function reloadNames(){
+    setNames(getRandomPeople(gPeople));
+}
+function setNames(people) {
+  var correctPerson = people[getRandomInt(0, people.length-1)];
+  $("#mail").unbind();
+  $("#names").empty();
+  setImage(correctPerson);
+  $("#mail").click(function() {
+    parent.location='mailto:' + correctPerson.email + '?subject=Your phonebook photo&body=Hi, I was playing the Mozilla Name Game and noticed your picture is missing or doesn\'t show your face very well.  If you have a chance, please upload a new one.  Thanks!';
+  });
+  people.forEach(function(person) {
+    var name = $("#templates .name").clone();
+    name.text(person.name);
+    name.click(function() {
+        $("#feedback").show();
+        $("#feedback").empty();
+        if (person.name == correctPerson.name){
+            // TODO take out title when it's null
+            $("#feedback").text("Correct! That was " + person.name);
+            $("#feedback").append("<br><br>");
+            if (person.title != null){
+                $("#feedback").append(person.title);
+            }
+            right++;
+            $("#score .right").text(right);
+        }else{
+            $("#feedback").text("Nope. That was " + correctPerson.name);
+            $("#feedback").append("<br><br>");
+            $("#feedback").append(person.title);
+            wrong++;
+            $("#score .wrong").text(wrong);
+        }
+        $('#feedback').fadeOut(3500);
+        reloadNames();
+    });
+    $("#names").append(name);
+  });
+}
+function getRandomPeople(people) {
+    var arr = [];
+    while (arr.length < 4) {
+        index = getRandomInt(0,people.length-1);
+        var randomPerson = people[index];
+        var found = false;
+        for (var i=0; i < arr.length; i++) {
+            if (arr[i].name==randomPerson.name){
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            arr[arr.length]=randomPerson;
+        }
+    }
+    return arr;
+}
+
+$(window).ready(function() {
+  $('#intro').fadeIn();
+  $("#feedback").show();
+  $("#feedback").empty();
+  $('#feedback').append("Mozilla Name Game!  Can you guess who's who?")
+  right = 0;
+  wrong = 0;
+  $("#score .right").text(0);
+  $("#score .wrong").text(0);
+  // would like to make feedback box appear/disappear when there's no content
+  setNames(getRandomPeople(gPeople));
+  $('#mail').fadeIn();
+  $('#score').fadeIn();
+  $('#feedback').fadeOut(3000);
+});
+</script>
+</head>
+    <body>
+        <div id="wrapper">
+            <div id="score">
+                <p>Right:<span class="right">0</span>Wrong:<span class="wrong">0</span></p>
+            </div>
+            <img id="thumbnail"/>
+            <div id="names">
+            </div>
+            <div id="feedback"></div>
+            <input type="button" value="Request New Photo" id="mail" />
+            
+        </div>
+        <!-- divs below this point are hidden intentionally -->
+        <div id="templates">
+          <a class="name">Name</a>
+        </div>
+    </body>
+</html>

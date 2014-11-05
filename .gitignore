@@ -1,0 +1,9 @@
+.DS_Store
+*.pyc
+static/people.json
+secrets.py
+mozgame.db
+config.json
+static/images/people/
+static/load-people.js
+static/cache.manifest

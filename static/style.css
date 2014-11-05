@@ -1,0 +1,132 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  font-style: inherit;
+  text-decoration: none;
+  list-style: none;
+  }
+
+@font-face {
+  font-family: "Droid Sans";
+  src: url(fonts/DroidSans.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Droid Sans";
+  font-weight: bold;
+  src: url(fonts/DroidSans-Bold.ttf) format("truetype");
+}
+
+html {
+  font: 16px "Lucida Grande", "Droid Sans", "Trebuchet MS", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  background: url(images/bg.png) #67a7c7 repeat-x fixed;
+  color: #fff;
+}
+a { display: block; padding: 2px;}
+a:hover { color: #000; font-weight: bold; }
+#feedback {
+  position: fixed;
+  margin-top: 25%;
+  padding: 20px;
+  background-color: rgba(32, 32, 32, 0.5);
+  text-align: center;
+  vertical-align: center;
+  display: none;
+  overflow: hidden;
+  height: 30%;
+  width: 60%;
+  z-index: 2;
+  border-radius: 15px;
+}
+#wrapper {
+  margin: 0 auto;
+  width: 80%;
+  padding: 20px;
+}
+#names {
+  float: left;
+  text-align: left;
+  display: inline-block;
+  width: 70%;
+  vertical-align: top;
+  margin: 1em 1em 0 1em;
+}
+#names a {
+  text-align: center;
+  background-color: rgba(32, 32, 32, 0.5);
+  border-radius: 15px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+#names a:hover {
+  color: #ff6633;
+}
+#score {
+    float: left;
+    display: none;
+    top: 5px;
+    margin-left: 15%;
+    margin-bottom: 5px;
+    background-color: rgb(219,236,243);
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+}
+#intro {
+    float: left;
+    padding: 20px;
+}
+#mail {
+    display: none;
+    padding: 2px;
+    margin-left: 15%;
+    margin-top: 20px;
+    float: left;
+    border-radius: 15px;
+}
+#thumbnail {
+  border-radius: 15px;
+  margin-left: 15%;
+}
+
+#welcome {
+  text-align: center;
+}
+
+#browserid-login {
+  border-radius: 15px;
+  margin: 20px;
+  margin-top: 50%;
+  float: right;
+}
+
+#browserid-logout {
+  border-radius: 5px;
+  padding: 5px;
+  margin: 20px;
+  margin-top: 20%;
+  float: right;
+
+}
+
+#score .right,.wrong { display: inline; padding: 5px}
+#templates { display: none; }
+img { 
+  float: left; 
+  clear: both;
+}
+h2 {
+    font-weight: bold;
+    color: #ff6633;
+    padding: 5px;
+    background-color: rgba(32, 32, 32, 0.5);
+    text-align: center;
+    vertical-align: center;
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
