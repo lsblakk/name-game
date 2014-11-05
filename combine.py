@@ -22,11 +22,12 @@ def main():
 
     people_list = []
     for email, info in people.items():
-        info['name'] = info['name'].strip()
-        info['email'] = email
+        edited_people = {}
+        edited_people['name'] = info['name'].strip()
+        edited_people['email'] = email
         if '%s.jpg' % email in thumbnails:
-            info['thumbnail'] = True
-        people_list.append(info)
+            edited_people['thumbnail'] = True
+        people_list.append(edited_people)
     
     def compare(a, b):
         return cmp(a['name'], b['name'])
