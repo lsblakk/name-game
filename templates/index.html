@@ -1,37 +1,24 @@
-<!DOCTYPE html>
-<html manifest="cache.manifest">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, maximum-scale=1">
-<title>Mozilla Name Game</title>
-    <head>
-        <link type="text/css" rel="stylesheet" href="static/jquery.mobile-1.4.5.min.css">
-                <!-- auth_script requires jquery and Mozilla's 'include.js' shim -->
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script src="https://browserid.org/include.js" type="text/javascript"></script>
-        <script type="text/javascript">{{ auth_script|safe }}</script>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body>
-        {% if current_user.is_authenticated() %}
-            <button id="browserid-logout">{{ current_user.email }} - Logout </button>
-        {% else %}
-            <button id="browserid-login"><img src="{{ url_for('static', filename='images/persona-button.jpg') }}" height="55px"></button>
-        {% endif %}
+{% extends "layout.html" %}
+{% block content %}
+{% if current_user.is_authenticated() %}
+    <button id="browserid-logout">{{ current_user.email }} - Logout </button>
+{% else %}
+    <button id="browserid-login"><img src="{{ url_for('static', filename='images/persona-button.jpg') }}" height="55px"></button>
+{% endif %}
 
-        <div id="wrapper">
-            <div id="score">
-                <p>Right:<span class="right">0</span>Wrong:<span class="wrong">0</span></p>
-            </div>
-            <img id="thumbnail" class="photo"/>
-            <div id="names">
-            </div>
-            <div id="intro"><p id="welcome">Try the Mozillian Name Game! (requires mozilla email)<br><br>Can you guess who's who?</p></div>
-            <div id="feedback" data-rel="dialog"></div>
-            
-        </div>
-        <!-- divs below this point are hidden intentionally -->
-        <div id="templates">
-          <a class="name">Name</a>
-        </div>
-    </body>
-</html>
+<div id="wrapper">
+    <div id="score">
+        <p>Right:<span class="right">0</span>Wrong:<span class="wrong">0</span></p>
+    </div>
+    <img id="thumbnail" class="photo"/>
+    <div id="names">
+    </div>
+    <div id="intro"><p id="welcome">Try the Mozillian Name Game! (requires mozilla email)<br><br>Can you guess who's who?</p></div>
+    <div id="feedback" data-rel="dialog"></div>
+    
+</div>
+<!-- divs below this point are hidden intentionally -->
+<div id="templates">
+  <a class="name">Name</a>
+</div>
+{% endblock %}
