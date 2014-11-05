@@ -107,10 +107,13 @@ def logout():
 ### Admin Tools ###
 @app.route('/show_db')
 def show_db():
-	users = []
-	for user in db.session.query(User):
-		users.append(dict(id=user.id, email=user.email))
-	return render_template('show_db.html', users=users)
+	if current_user.is_authenticated():
+		users = []
+		for user in db.session.query(User):
+			users.append(dict(id=user.id, email=user.email))
+		return render_template('show_db.html', users=users)
+	else:
+		return redirect('/')
 
 if __name__ == '__main__':
 	DEBUG = os.environ.get('DEBUG', False) in ('true', '1', 'on')
